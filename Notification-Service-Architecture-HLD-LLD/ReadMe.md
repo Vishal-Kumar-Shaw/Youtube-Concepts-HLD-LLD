@@ -123,3 +123,42 @@ Response
 Currently, the application only creates an order.
 
 There is no notification mechanism.
+
+
+# Commit 3 - Send Confirmation Email Synchronously
+
+## Objective
+
+Send a confirmation email immediately after creating an order.
+
+## Updated Architecture
+
+```text
+Client
+   │
+POST /orders
+   │
+   ▼
+Order Controller
+   │
+   ▼
+Order Service
+   │
+   ├── Save Order
+   │
+   └── Send Email
+           │
+           ▼
+      SMTP Server
+           │
+           ▼
+HTTP Response
+```
+
+## Observation
+
+The client does not receive a response until the email has been sent.
+
+Although the order is already created, the API remains blocked while waiting for the notification process to complete.
+
+This increases response time and tightly couples order creation with email delivery.

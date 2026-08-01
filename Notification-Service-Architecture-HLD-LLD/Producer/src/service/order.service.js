@@ -1,3 +1,4 @@
+const { sendEmail } = require('./email.service');
 async function createOrder(body) {
     const order = {
         orderId: `ORD-${Date.now()}`,
@@ -11,7 +12,7 @@ async function createOrder(body) {
     console.log("💾 Order Saved");
 
     // simulate the order
-    console.log(order);
+    await sendEmail(order);
 
     return order;
 }

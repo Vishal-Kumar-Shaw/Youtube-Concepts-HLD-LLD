@@ -270,3 +270,39 @@ Producer
 RabbitMQ Connection ✅
 
 > RabbitMQ is now reachable, but no queues or messages have been created yet.
+
+
+## Commit 7 - Create Notification Queue
+
+### Objective
+
+Create a durable queue that will store notification events.
+
+### Why?
+
+A queue acts as a temporary storage between producers and consumers, allowing asynchronous communication.
+
+### What is `assertQueue()`?
+
+It ensures that the queue exists.
+
+- If the queue already exists, RabbitMQ uses it.
+- If it doesn't exist, RabbitMQ creates it.
+
+### Why `durable: true`?
+
+A durable queue survives RabbitMQ restarts, making it suitable for production systems.
+
+### Current Architecture
+
+```text
+Producer
+    │
+    ▼
+RabbitMQ
+    │
+    ▼
+notification_queue
+```
+
+The queue exists, but no messages are being published yet.

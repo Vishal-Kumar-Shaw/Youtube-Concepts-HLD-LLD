@@ -1,6 +1,7 @@
 const amqp = require('amqplib');
 
 const RABBITMQ_URL = 'amqp://guest:guest@localhost:5672';
+const QUEUE_NAME = "notification_queue";
 let channel;
 
 async function connectRabbitMQ() {
@@ -11,6 +12,11 @@ async function connectRabbitMQ() {
         channel = await connection.createChannel();
 
         console.log("Channel created successfully");
+
+        await channel.assertQueue(QUEUE_NAME, {
+            durable: true
+        })
+        console.log(`Queue '${QUEUE_NAME}' is ready`);
 
         connection.on("error",(err)=>{
             console.log("RabbitMQ connectionerror", err.message);
@@ -31,5 +37,6 @@ function getChannel(){
 }
 module.exports = {
     connectRabbitMQ,
-    getChannel
+    getChannel,
+    QUEUE_NAME
 }

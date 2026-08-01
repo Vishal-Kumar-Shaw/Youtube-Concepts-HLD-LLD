@@ -247,3 +247,26 @@ Password : guest
 ```
 
 No queues have been created yet.
+
+
+## Commit 6 - Establish RabbitMQ Connection
+
+### Objective
+
+Connect the Producer application to RabbitMQ.
+
+### What was added?
+
+- Installed `amqplib`
+- Created a reusable RabbitMQ configuration
+- Established a persistent connection
+- Created a communication channel
+
+### Current Architecture
+
+Producer
+    │
+    ▼
+RabbitMQ Connection ✅
+
+> RabbitMQ is now reachable, but no queues or messages have been created yet.

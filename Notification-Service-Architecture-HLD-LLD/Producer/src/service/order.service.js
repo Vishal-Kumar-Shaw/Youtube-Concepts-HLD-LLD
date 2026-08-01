@@ -1,4 +1,5 @@
 const { sendEmail } = require('./email.service');
+const { publishOrderEvent } = require('../publishers/notification.publisher')
 async function createOrder(body) {
     const order = {
         orderId: `ORD-${Date.now()}`,
@@ -12,7 +13,8 @@ async function createOrder(body) {
     console.log("💾 Order Saved");
 
     // simulate the order
-    await sendEmail(order);
+    // await sendEmail(order);
+    await publishOrderEvent(order);
 
     return order;
 }

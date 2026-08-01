@@ -306,3 +306,40 @@ notification_queue
 ```
 
 The queue exists, but no messages are being published yet.
+
+
+
+## Commit 8 - Publish Order Events to RabbitMQ
+
+### Objective
+
+Replace synchronous email sending with event publishing.
+
+### What changed?
+
+Instead of sending the email directly, the Order Service now publishes an `OrderCreated` event to RabbitMQ.
+
+### Updated Architecture
+
+```text
+Client
+   │
+POST /orders
+   │
+   ▼
+Order Service
+   │
+   ├── Save Order
+   │
+   └── Publish Event
+            │
+            ▼
+     notification_queue
+```
+
+### Benefits
+
+- The API responds immediately.
+- The Order Service no longer depends on the Email Service.
+- Notification processing can happen later by a background worker.
+- Messages remain safely stored in the queue until they are consumed.

@@ -162,3 +162,44 @@ The client does not receive a response until the email has been sent.
 Although the order is already created, the API remains blocked while waiting for the notification process to complete.
 
 This increases response time and tightly couples order creation with email delivery.
+
+# Commit 4 - Simulate Email Service Failure
+
+## Objective
+
+Simulate a failure in the email service to understand the drawbacks of synchronous communication.
+
+## Current Flow
+
+```text
+Client
+   │
+POST /orders
+   │
+   ▼
+Order Controller
+   │
+   ▼
+Order Service
+   │
+   ├── Save Order ✅
+   │
+   └── Send Email ❌
+           │
+           ▼
+HTTP 500 Response
+```
+
+## Problem
+
+The order is successfully created, but because the email service fails, the entire API returns an error.
+
+This tightly couples the order creation process with the notification process.
+
+A failure in one downstream dependency causes the entire request to fail.
+
+## Motivation
+
+Order creation and notification should be independent.
+
+The customer should receive a successful response as soon as the order is created, while notifications should be processed asynchronously in the background.

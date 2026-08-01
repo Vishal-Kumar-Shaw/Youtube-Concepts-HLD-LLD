@@ -203,3 +203,47 @@ A failure in one downstream dependency causes the entire request to fail.
 Order creation and notification should be independent.
 
 The customer should receive a successful response as soon as the order is created, while notifications should be processed asynchronously in the background.
+
+# Commit 5 - Add RabbitMQ Infrastructure
+
+## Objective
+
+Introduce RabbitMQ into the project using Docker.
+
+At this stage, RabbitMQ is running but is not yet integrated with the application.
+
+## Why?
+
+Before refactoring the application to asynchronous communication, we first need a message broker capable of receiving and storing events.
+
+## Current Architecture
+
+```text
+Client
+   │
+POST /orders
+   │
+   ▼
+Order Service
+   │
+   ▼
+Email Service
+
+RabbitMQ (Running but not connected)
+```
+
+## RabbitMQ Management UI
+
+```
+http://localhost:15672
+```
+
+Default Credentials
+
+```
+Username : guest
+
+Password : guest
+```
+
+No queues have been created yet.

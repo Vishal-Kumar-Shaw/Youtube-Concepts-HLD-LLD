@@ -3,9 +3,10 @@ function sleep(ms){
 }
 async function sendEmail(order) {
     console.log("----------------------")
-    console.log("Sending confirmation email...")
-    await sleep(2000);
-    console.log("Email notification sent successfully");
+    console.log("Sending confirmation email...");
+    console.log(`To : ${order.email}`);
+    await sleep(3000);
+    throw new Error("SMTP Server is currently unavailable.");
 }   
 
 module.exports = {

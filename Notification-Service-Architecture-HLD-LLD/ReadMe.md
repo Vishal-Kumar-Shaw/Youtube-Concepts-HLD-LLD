@@ -378,3 +378,42 @@ Console
 Messages are successfully transferred from the Producer to the Worker without any direct communication between the two applications.
 
 The Worker currently only reads messages and does not acknowledge them yet.
+
+
+## Commit 10 - Acknowledge Successfully Processed Messages
+
+### Objective
+
+Ensure RabbitMQ removes messages only after they have been processed successfully.
+
+### Why?
+
+RabbitMQ does not automatically delete a message after delivering it to a consumer.
+
+The consumer must explicitly acknowledge successful processing using `channel.ack(message)`.
+
+### Flow
+
+```text
+Producer
+    │
+    ▼
+notification_queue
+    │
+    ▼
+Worker
+    │
+Process Message
+    │
+    ▼
+ACK
+    │
+    ▼
+Message Removed
+```
+
+### Benefits
+
+- Prevents duplicate processing.
+- Guarantees reliable message delivery.
+- Messages are removed only after successful processing.

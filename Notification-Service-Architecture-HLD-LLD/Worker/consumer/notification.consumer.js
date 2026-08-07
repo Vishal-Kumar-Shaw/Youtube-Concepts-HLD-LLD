@@ -9,6 +9,7 @@ function startConsumer(){
         console.log('--------------------------');
         console.log('Order Received');
         console.log(order);
+        channel.ack(message);
     })
 
 }

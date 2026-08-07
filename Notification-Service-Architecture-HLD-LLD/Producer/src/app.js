@@ -5,6 +5,9 @@ const orderRoutes = require('./routes/order.route')
 app.use(express.json());
 
 app.use('/orders', orderRoutes);
+app.get('/',(req,res)=>{
+     return res.json("Working");
+})
 module.exports ={
      app
 };

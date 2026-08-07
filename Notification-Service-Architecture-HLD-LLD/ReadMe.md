@@ -343,3 +343,38 @@ Order Service
 - The Order Service no longer depends on the Email Service.
 - Notification processing can happen later by a background worker.
 - Messages remain safely stored in the queue until they are consumed.
+
+
+## Commit 9 - Add Notification Worker
+
+### Objective
+
+Create a dedicated worker service that consumes order events from RabbitMQ.
+
+### Updated Architecture
+
+```text
+Producer
+    │
+    ▼
+notification_queue
+    │
+    ▼
+Notification Worker
+    │
+    ▼
+Console
+```
+
+### What changed?
+
+- Introduced a separate Worker application.
+- Connected the Worker to RabbitMQ.
+- Consumed messages from the notification queue.
+- Printed received events to the console.
+
+### Observation
+
+Messages are successfully transferred from the Producer to the Worker without any direct communication between the two applications.
+
+The Worker currently only reads messages and does not acknowledge them yet.

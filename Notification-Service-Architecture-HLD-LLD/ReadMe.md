@@ -417,3 +417,40 @@ Message Removed
 - Prevents duplicate processing.
 - Guarantees reliable message delivery.
 - Messages are removed only after successful processing.
+
+
+## Commit 11 - Process Notification Emails in Worker
+
+### Objective
+
+Move email processing into the Worker so that notifications are handled asynchronously.
+
+### Updated Architecture
+
+```text
+Producer
+    │
+    ▼
+notification_queue
+    │
+    ▼
+Notification Worker
+    │
+    ▼
+Email Service
+    │
+    ▼
+SMTP (Simulated)
+```
+
+### What changed?
+
+- Added an Email Service inside the Worker.
+- The Worker now sends confirmation emails after consuming messages.
+- Messages are acknowledged only after successful email processing.
+
+### Benefit
+
+The Order API is no longer responsible for sending emails.
+
+Notification processing happens independently in the background, improving response time and separating responsibilities.

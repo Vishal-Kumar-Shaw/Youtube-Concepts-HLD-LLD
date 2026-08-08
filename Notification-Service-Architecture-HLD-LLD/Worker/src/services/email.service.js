@@ -7,7 +7,9 @@ async function sendEmail(order){
     console.log(`sending email to ${order.email}`);
     console.log(`Subject : Order Confirmation`);
     await sleep(3000);
-    
+    if(order.email.includes('fail')){
+        throw new Error('SMTP Server down');
+    }
     console.log("✅ Email Sent Successfully");
 }
 

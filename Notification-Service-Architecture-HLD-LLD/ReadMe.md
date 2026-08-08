@@ -454,3 +454,37 @@ SMTP (Simulated)
 The Order API is no longer responsible for sending emails.
 
 Notification processing happens independently in the background, improving response time and separating responsibilities.
+## Commit 12 - Simulate Email Delivery Failures
+
+### Objective
+
+Simulate failures while sending notification emails.
+
+### Why?
+
+In real-world systems, external services such as SMTP servers can become temporarily unavailable.
+
+The application must be able to recover from these failures without losing messages.
+
+### Current Flow
+
+```text
+Producer
+    │
+    ▼
+notification_queue
+    │
+    ▼
+Worker
+    │
+    ▼
+Email Service
+    │
+SMTP Failure
+```
+
+### Observation
+
+The message is **not acknowledged**, so RabbitMQ keeps it for future processing.
+
+This ensures that failed notifications are not lost.

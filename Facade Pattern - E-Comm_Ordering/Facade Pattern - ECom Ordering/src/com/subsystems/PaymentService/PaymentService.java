@@ -1,7 +1,8 @@
 package com.subsystems.PaymentService;
 
 public class PaymentService {
-    public void pay(double amount){
-        System.out.println("payment done");
+    public boolean pay(double amount){
+        System.out.println("payment done for amount "+amount);
+        return true;
     }
 }
